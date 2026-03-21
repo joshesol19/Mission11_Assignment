@@ -1,0 +1,21 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+# Node / Vite / React
+node_modules/
+dist/
+*.tsbuildinfo
+
+# IDE / OS
+.idea/
+.DS_Store
+*.swp
+
+# Env (keep local API URLs private)
+.env
+.env.local
+.env.*.local

@@ -51,4 +51,15 @@ public class BooksController : ControllerBase
 
         return book;
     }
+
+    [HttpGet("categories")]
+    public async Task<ActionResult<string[]>> GetCategories()
+    {
+        var categories = _context.Books
+        .Select(b => b.Category)
+        .Distinct()
+        .ToList();
+
+        return Ok(categories);
+    }
 }

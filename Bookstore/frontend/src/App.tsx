@@ -39,7 +39,6 @@ function App() {
 
   return (
     <div className="container py-3">
-      <h1 className="mb-3">Bookstore</h1>
       <div className="row g-3">
         {books.map((b) => (
           <div className="col-md-6 col-lg-4" key={b.bookID}>

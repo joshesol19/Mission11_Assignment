@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import './categoryFilter.css';
 
-function CategoryFilter() {
+const API =
+  import.meta.env.VITE_API_BASE_URL ?? 'https://localhost:7263'
+
+
+function CategoryFilter({onCheckboxChange, selectedCategories}: {onCheckboxChange: (categories: string[])=>void, selectedCategories: string[]}) {
     const [categories, setCategories] = useState<string[]>([]);
-    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     useEffect(() => {
         try {
             async function fetchCategories() {
-                const resp = await fetch('https://localhost:7263/api/Books/categories');
+                const resp = await fetch(`${API}/api/Books/categories`);
                 const data = await resp.json();
                 setCategories(data);
             }
@@ -20,7 +23,7 @@ function CategoryFilter() {
 
     function handleCategoryChange({target}: {target: HTMLInputElement}) {
         const updatedCategories = selectedCategories.includes(target.value) ? selectedCategories.filter((x) => x !== target.value) : [...selectedCategories, target.value];
-        setSelectedCategories(updatedCategories);
+        onCheckboxChange(updatedCategories);
     }
 
 
@@ -32,6 +35,7 @@ function CategoryFilter() {
                     <input type="checkbox" 
                     id={c} value={c} 
                     className="category-filter-checkbox" 
+                    checked={selectedCategories.includes(c)}
                     onChange={handleCategoryChange} />
 
                     <label htmlFor={c} className="category-filter-label">{c}</label>

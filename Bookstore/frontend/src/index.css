@@ -1,3 +1,12 @@
 body {
   margin: 0;
 }
+
+/* Theme: primary = red (replaces Bootstrap blue everywhere) */
+:root,
+[data-bs-theme='light'] {
+  --bs-primary: #c1121f;
+  --bs-primary-rgb: 193, 18, 31;
+  --bs-link-color: #c1121f;
+  --bs-link-hover-color: #9a0e19;
+}

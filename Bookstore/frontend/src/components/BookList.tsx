@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const API =
   import.meta.env.VITE_API_BASE_URL ?? 'https://localhost:7263'
@@ -23,7 +24,7 @@ function BookList({ selectedCategories }: {selectedCategories: string[]}) {
   const [pageSize, setPageSize] = useState(5)
   const [sortOrder, setSortOrder] = useState('asc')
   const [totalCount, setTotalCount] = useState(0)
-
+  const navigate = useNavigate()
   const totalPages = Math.ceil(totalCount / pageSize)
 
   useEffect(() => {
@@ -74,6 +75,8 @@ function BookList({ selectedCategories }: {selectedCategories: string[]}) {
                 <p className="small mb-0">
                   <strong>Price:</strong> ${b.price.toFixed(2)}
                 </p>
+                <br />
+                <button className="btn btn-primary" onClick={() => navigate(`/add-to-cart/${b.bookID}`)}>Add to Cart</button>
               </div>
             </div>
           </div>

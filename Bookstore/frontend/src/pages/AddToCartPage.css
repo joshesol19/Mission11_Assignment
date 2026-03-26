@@ -1,0 +1,52 @@
+.add-to-cart-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.add-to-cart-book-panel {
+  max-width: 26rem;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
+  padding: 1.75rem 1.5rem;
+  background: #f8f9fa;
+}
+
+.add-to-cart-book-title {
+  font-size: clamp(1.35rem, 4vw, 1.85rem);
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  margin: 0 0 1.25rem;
+  color: #212529;
+}
+
+.add-to-cart-book-panel p {
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+  color: #495057;
+  line-height: 1.45;
+}
+
+.add-to-cart-price {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ced4da;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #212529;
+}
+
+.add-to-cart-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 26rem;
+  margin-top: 1.5rem;
+}

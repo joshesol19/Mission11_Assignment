@@ -6,6 +6,11 @@ function CartPage() {
   const { cart, clearCart, removeFromCart } = useCart()
   const navigate = useNavigate()
 
+  const totalAmount = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  )
+
   const handleClearCart = () => {
     clearCart()
     navigate('/cart')
@@ -25,13 +30,14 @@ function CartPage() {
         {cart.length === 0 ? (
           <p>Your cart is empty.</p>
         ) : (
-          <table className="table">
+          /* #notcoveredinthevideos: Uses Bootstrap table utilities for clearer checkout-style cart UI (hover + alignment + highlighted total row). */
+          <table className="table table-hover align-middle">
             <thead>
               <tr>
                 <th>Book</th>
                 <th>Price</th>
                 <th>Quantity</th>
-                <th>Total</th>
+                <th>Subtotal</th>
                 <th></th>
               </tr>
             </thead>
@@ -45,9 +51,17 @@ function CartPage() {
                   <td><button type="button" className="btn btn-outline-danger" onClick={() => removeFromCart(item)}>Remove</button></td>
                 </tr>
               ))}
+              <tr className="table-light">
+                <td className="text-end fw-bold">Total</td>
+                <td></td>
+                <td></td>
+                <td className="fw-bold">${totalAmount.toFixed(2)}</td>
+                <td></td>
+              </tr>
             </tbody>
           </table>
         )}
+        {/* #notcoveredinthevideos: Uses Bootstrap flex utilities + `gap-4` to control spacing between action buttons. */}
         <div className="d-flex flex-wrap align-items-center gap-4 mt-3">
           <button type="button" className="btn btn-danger" onClick={handleClearCart}>
             Clear Cart

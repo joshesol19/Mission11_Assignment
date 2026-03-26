@@ -48,6 +48,7 @@ function BookList({ selectedCategories }: {selectedCategories: string[]}) {
   
   return (
     <div className="py-3">
+      {/* #notcoveredinthevideos: Uses Bootstrap `g-3` gutter utility to space grid columns without custom CSS. */}
       <div className="row g-3">
         {books.map((b) => (
           <div className="col-md-6 col-lg-4" key={b.bookID}>

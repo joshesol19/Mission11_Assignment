@@ -52,10 +52,10 @@ function CartPage() {
                 </tr>
               ))}
               <tr className="table-light">
-                <td className="text-end fw-bold">Total</td>
                 <td></td>
                 <td></td>
-                <td className="fw-bold">${totalAmount.toFixed(2)}</td>
+                <td></td>
+                <td className="fw-bold">Total: ${totalAmount.toFixed(2)}</td>
                 <td></td>
               </tr>
             </tbody>
@@ -71,7 +71,7 @@ function CartPage() {
             className="btn btn-primary"
             onClick={() => navigate('/')}
           >
-            Back to Books
+            Continue Shopping
           </button>
         </div>
       </div>

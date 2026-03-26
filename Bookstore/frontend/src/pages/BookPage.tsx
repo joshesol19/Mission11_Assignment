@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useShop } from '../context/ShopContext'
 import WelcomeBanner from "../components/welcomeBanner";
 import CategoryFilter from "../components/categoryFilter";
 import BookList from "../components/BookList";
 import CartSummary from "../components/CartSummary";
 
 function BookPage() {
-    const [selectedCategories, setSelectedCategories] = useState<string[]>([])
+    const { selectedCategories, setSelectedCategories } = useShop()
     return (
         <>
         <CartSummary />

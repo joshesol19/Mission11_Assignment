@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useShop } from '../context/ShopContext'
 
 const API =
   import.meta.env.VITE_API_BASE_URL ?? 'https://localhost:7263'
@@ -20,12 +21,23 @@ type Book = {
 
 function BookList({ selectedCategories }: {selectedCategories: string[]}) {
   const [books, setBooks] = useState<Book[]>([])
-  const [pageNum, setPageNum] = useState(1)
-  const [pageSize, setPageSize] = useState(5)
-  const [sortOrder, setSortOrder] = useState('asc')
   const [totalCount, setTotalCount] = useState(0)
   const navigate = useNavigate()
+
+  const { pageNum, setPageNum, pageSize, setPageSize, sortOrder, setSortOrder } = useShop()
   const totalPages = Math.ceil(totalCount / pageSize)
+
+  const didMountRef = useRef(false)
+
+  // Reset to page 1 after a category selection change, but do not reset on initial mount
+  // so "Continue Shopping" can restore the exact page the user was on.
+  useEffect(() => {
+    if (didMountRef.current) {
+      setPageNum(1)
+      return
+    }
+    didMountRef.current = true
+  }, [selectedCategories, setPageNum])
 
   useEffect(() => {
     async function fetchBooks() {
@@ -141,7 +153,10 @@ function BookList({ selectedCategories }: {selectedCategories: string[]}) {
         <button
           type="button"
           className="btn btn-outline-primary"
-          onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+          onClick={() => {
+            setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
+            setPageNum(1)
+          }}
         >
           Sort by Title {sortOrder === 'asc' ? '↑' : '↓'}
         </button>

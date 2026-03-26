@@ -67,7 +67,7 @@ function AddToCartPage() {
             </div>
 
             <div className="add-to-cart-actions">
-                <button type="button" className="btn btn-outline-secondary" onClick={() => navigate('/')}>Back to Books</button>
+                <button type="button" className="btn btn-outline-secondary" onClick={() => navigate('/')}>Continue Shopping</button>
                 <button type="button" className="btn btn-outline-primary" onClick={handleAddToCart}>Add to Cart</button>
             </div>
         </div>

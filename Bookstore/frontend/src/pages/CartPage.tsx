@@ -12,6 +12,7 @@ function CartPage() {
   )
 
   const handleClearCart = () => {
+    // this handler empties the cart and then reloads the cart page so the table updates
     clearCart()
     navigate('/cart')
   }
@@ -21,6 +22,7 @@ function CartPage() {
       <div className="container mt-4">
         <div className="row">
           <div className="col-12">
+            {/* this banner keeps the cart page feeling consistent with the main shop page */}
             <WelcomeBanner />
           </div>
         </div>

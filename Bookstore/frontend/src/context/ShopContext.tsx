@@ -23,6 +23,7 @@ interface ShopContextType {
   setSortOrder: Dispatch<SetStateAction<SortOrder>>
 }
 
+// this shop context holds filters and paging so the book pages can share that state
 const ShopContext = createContext<ShopContextType | undefined>(undefined)
 
 export const ShopProvider = ({ children }: { children: ReactNode }) => {
@@ -44,6 +45,7 @@ export const ShopProvider = ({ children }: { children: ReactNode }) => {
         setSortOrder,
       }}
     >
+      {/* this provider wraps the app so children can pull the current shop settings easily */}
       {children}
     </ShopContext.Provider>
   )

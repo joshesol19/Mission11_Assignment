@@ -1,3 +1,4 @@
+// this type represents a single book record that we use across the app
 export type Book = {
   bookID: number
   title: string

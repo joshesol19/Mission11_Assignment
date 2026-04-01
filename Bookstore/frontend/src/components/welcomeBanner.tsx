@@ -1,4 +1,5 @@
 import './welcomeBanner.css';
+// this welcome banner is just a simple header to greet the user on the main page
 function WelcomeBanner() {  
     return (
         <div className="welcome-banner">

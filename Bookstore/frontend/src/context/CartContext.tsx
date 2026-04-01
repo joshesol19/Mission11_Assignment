@@ -14,10 +14,12 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined)
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
+    // this provider keeps a shared cart state so any page can see the current itmes
     const [cart, setCart] = useState<Book[]>([])
 
     const addToCart = (item: Book) => {
         setCart((prevCart) => {
+            // here we check if the book is already in the cart before we update the quantity
             const existingItem = cart.find(i => i.bookID === item.bookID)
             const updatedCart = cart.map( (c: Book) => 
                 c.bookID === item.bookID ? { ...c, price: c.price, quantity: c.quantity + item.quantity } : c
@@ -32,6 +34,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     const clearCart = () => {
+        // this just wipes out all cart data when the user wants to start over agian
         setCart([])
     }
 

@@ -31,6 +31,7 @@ function AddToCartPage() {
 
     useEffect(() => {
         const fetchBook = async () => {
+            // this effect grabs one book by id so we can show its details before adding to cart
             const res = await fetch(`https://localhost:7263/api/Books/${bookId}`)
             const data = await res.json()
             setBook(data)

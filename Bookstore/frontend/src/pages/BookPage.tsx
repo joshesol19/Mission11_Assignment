@@ -8,6 +8,7 @@ function BookPage() {
     const { selectedCategories, setSelectedCategories } = useShop()
     return (
         <>
+        {/* this page wires together the filter, list, and summary for the main shopping view */}
         <CartSummary />
         <div className="container mt-4">
         <div className="row">

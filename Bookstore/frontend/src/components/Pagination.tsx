@@ -7,6 +7,7 @@ interface PaginationProps {
     onPageSizeChange: (newPageSize: number) => void 
 }
 
+// this pagination component handles moving between pages of books in the ui
 const Pagination = ({ currentPage, totalPages, onPageChange, onPageSizeChange }: PaginationProps) => {
     const { pageNum, setPageNum, pageSize, setPageSize, sortOrder, setSortOrder } = useShop()
     console.log("totalPages:", totalPages)
@@ -20,6 +21,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, onPageSizeChange }:
             style={{ width: 'auto' }}
             value={pageSize}
             onChange={(e) => {
+              // when the user changes this select we reset the page and updaet page size
               setPageSize(Number(e.target.value))
               setPageNum(1)
             }}
@@ -53,6 +55,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, onPageSizeChange }:
                 disabled={isCurrent}
                 onClick={() => setPageNum(n)}
               >
+                {/* this button label shows the page number that we are jumping too */}
                 {n}
               </button>
             )

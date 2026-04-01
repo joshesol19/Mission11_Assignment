@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import './categoryFilter.css';
 
+// this api url lets us hit the backend to pull out all the book categories
 const API =
   import.meta.env.VITE_API_BASE_URL ?? 'https://localhost:7263'
 
 
+// this component lets the user tick checkboxes to filter wich categories are shown
 function CategoryFilter({onCheckboxChange, selectedCategories}: {onCheckboxChange: (categories: string[])=>void, selectedCategories: string[]}) {
     const [categories, setCategories] = useState<string[]>([]);
     useEffect(() => {
@@ -12,6 +14,7 @@ function CategoryFilter({onCheckboxChange, selectedCategories}: {onCheckboxChang
             async function fetchCategories() {
                 const resp = await fetch(`${API}/api/Books/categories`);
                 const data = await resp.json();
+                // after the api call we stash the categories into state so the list renders
                 setCategories(data);
             }
             fetchCategories();

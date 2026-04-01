@@ -6,7 +6,6 @@ import WelcomeBanner from '../components/welcomeBanner'
 import Pagination from '../components/Pagination'
 import type { Book } from '../types/BookItem'
 
-// same thing as a function
 const AdminBooksPage = ({ selectedCategories }: {selectedCategories: string[]}) => {
     const [books, setBooks] = useState<Book[]>([])
     const [totalCount, setTotalCount] = useState(0)

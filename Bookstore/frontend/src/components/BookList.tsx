@@ -18,6 +18,7 @@ type Book = {
 
 
 
+// this component shows the main list of books so the user can browse everything
 function BookList({ selectedCategories }: {selectedCategories: string[]}) {
   const [books, setBooks] = useState<Book[]>([])
   const [totalCount, setTotalCount] = useState(0)
@@ -31,6 +32,7 @@ function BookList({ selectedCategories }: {selectedCategories: string[]}) {
   // Reset to page 1 after a category selection change, but do not reset on initial mount
   // so "Continue Shopping" can restore the exact page the user was on.
   useEffect(() => {
+    // this effect is just watching for category chnages and bumps the page back to one
     if (didMountRef.current) {
       setPageNum(1)
       return
@@ -43,6 +45,7 @@ function BookList({ selectedCategories }: {selectedCategories: string[]}) {
       try {
         setLoading(true); 
         const data = await fetchBooks(pageNum, pageSize, sortOrder, selectedCategories);
+        // here we pull the books and total count from the api so paging can work
         setBooks(data.books as unknown as Book[])
         setTotalCount(data.totalCount ?? 0)
       } catch (error) {

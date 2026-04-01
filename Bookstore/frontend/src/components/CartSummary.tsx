@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
+// this cart summary shows a tiny badge with how much is in the cart
 const CartSummary = () => {
   const navigate = useNavigate();
   const { cart } = useCart();
@@ -12,6 +13,7 @@ const CartSummary = () => {
     0
   );
 
+  // clicking on this area will navigate the user over to the cart screen
   return (
     <div
       role="button"

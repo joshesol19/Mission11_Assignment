@@ -1,25 +1,25 @@
 import { createContext, useState } from "react"
 import { useContext } from "react"
-import type { CartItem } from '../types/CartItem'
+import type { Book } from '../types/BookItem'
 
 
 
 interface CartContextType {
-    cart: CartItem[]
-    addToCart: (item: CartItem) => void
-    removeFromCart: (item: CartItem) => void
+    cart: Book[]
+    addToCart: (item: Book) => void
+    removeFromCart: (item: Book) => void
     clearCart: () => void
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-    const [cart, setCart] = useState<CartItem[]>([])
+    const [cart, setCart] = useState<Book[]>([])
 
-    const addToCart = (item: CartItem) => {
+    const addToCart = (item: Book) => {
         setCart((prevCart) => {
             const existingItem = cart.find(i => i.bookID === item.bookID)
-            const updatedCart = cart.map( (c: CartItem) => 
+            const updatedCart = cart.map( (c: Book) => 
                 c.bookID === item.bookID ? { ...c, price: c.price, quantity: c.quantity + item.quantity } : c
             );
 
@@ -27,7 +27,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         })
     }
 
-    const removeFromCart = (item: CartItem) => {
+    const removeFromCart = (item: Book) => {
         setCart((prevCart) => prevCart.filter(i => i.bookID !== item.bookID))
     }
 

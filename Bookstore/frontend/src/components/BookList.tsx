@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useShop } from '../context/ShopContext'
-
-const API =
-  import.meta.env.VITE_API_BASE_URL ?? 'https://localhost:7263'
+import { fetchBooks } from '../api/ProjectsAPI'
+import Pagination from './Pagination'
 
 type Book = {
   bookID: number
@@ -23,10 +22,10 @@ function BookList({ selectedCategories }: {selectedCategories: string[]}) {
   const [books, setBooks] = useState<Book[]>([])
   const [totalCount, setTotalCount] = useState(0)
   const navigate = useNavigate()
-
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
   const { pageNum, setPageNum, pageSize, setPageSize, sortOrder, setSortOrder } = useShop()
   const totalPages = Math.ceil(totalCount / pageSize)
-
   const didMountRef = useRef(false)
 
   // Reset to page 1 after a category selection change, but do not reset on initial mount
@@ -40,22 +39,28 @@ function BookList({ selectedCategories }: {selectedCategories: string[]}) {
   }, [selectedCategories, setPageNum])
 
   useEffect(() => {
-    async function fetchBooks() {
-      const params = new URLSearchParams()
-      params.set('pageNum', String(pageNum))
-      params.set('pageSize', String(pageSize))
-      params.set('sortOrder', sortOrder)
-      for (const c of selectedCategories) {
-        params.append('categories', c)
+    async function loadBooks() {
+      try {
+        setLoading(true); 
+        const data = await fetchBooks(pageNum, pageSize, sortOrder, selectedCategories);
+        setBooks(data.books as unknown as Book[])
+        setTotalCount(data.totalCount ?? 0)
+      } catch (error) {
+        setError((error as Error).message);
+      } finally {
+        setLoading(false)
       }
-      const res = await fetch(`${API}/api/Books?${params.toString()}`)
-      const data = await res.json()
-      setBooks(data.books ?? [])
-      setTotalCount(data.totalCount ?? 0)
     }
 
-    fetchBooks()
+    loadBooks()
   }, [pageNum, pageSize, sortOrder, selectedCategories])
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
+  if (error) {
+    return <div>Error: {error}</div>
+  }
 
   
   return (
@@ -96,71 +101,7 @@ function BookList({ selectedCategories }: {selectedCategories: string[]}) {
         ))}
       </div>
 
-      <div className="d-flex flex-wrap gap-2 align-items-center mt-3">
-        <label className="d-flex align-items-center gap-2 mb-0">
-          <span className="text-nowrap small">Per page</span>
-          <select
-            className="form-select form-select-sm"
-            style={{ width: 'auto' }}
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value))
-              setPageNum(1)
-            }}
-          >
-            <option value={5}>5</option>
-            <option value={10}>10</option>
-            <option value={20}>20</option>
-          </select>
-        </label>
-
-        <button
-          type="button"
-          className="btn btn-secondary"
-          disabled={pageNum === 1}
-          onClick={() => setPageNum((p) => p - 1)}
-        >
-          Previous
-        </button>
-
-        {Array(totalPages)
-          .fill(null)
-          .map((_, index) => {
-            const n = index + 1
-            const isCurrent = pageNum === n
-            return (
-              <button
-                key={n}
-                type="button"
-                className={`btn ${isCurrent ? 'btn-primary' : 'btn-outline-primary'}`}
-                disabled={isCurrent}
-                onClick={() => setPageNum(n)}
-              >
-                {n}
-              </button>
-            )
-          })}
-
-        <button
-          type="button"
-          className="btn btn-secondary"
-          disabled={pageNum === totalPages}
-          onClick={() => setPageNum((p) => p + 1)}
-        >
-          Next
-        </button>
-
-        <button
-          type="button"
-          className="btn btn-outline-primary"
-          onClick={() => {
-            setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
-            setPageNum(1)
-          }}
-        >
-          Sort by Title {sortOrder === 'asc' ? '↑' : '↓'}
-        </button>
-      </div>
+      <Pagination currentPage={pageNum} totalPages={totalPages} onPageChange={setPageNum} onPageSizeChange={setPageSize} />
     </div>
   )
 }

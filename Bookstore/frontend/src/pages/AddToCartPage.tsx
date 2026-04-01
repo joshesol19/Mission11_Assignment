@@ -3,19 +3,8 @@ import WelcomeBanner from "../components/welcomeBanner";
 import { useNavigate, useParams } from 'react-router-dom'
 import './AddToCartPage.css'
 import { useCart } from "../context/CartContext"
-import type { CartItem } from "../types/CartItem"
+import type { Book } from "../types/BookItem"
 
-type Book = {
-    bookID: number
-    title: string
-    author: string
-    publisher: string
-    isbn: string
-    classification: string
-    category: string
-    pageCount: number
-    price: number
-}
 
 function AddToCartPage() {
     const navigate = useNavigate()
@@ -24,9 +13,15 @@ function AddToCartPage() {
     const { addToCart } = useCart()
 
     const handleAddToCart = () => {
-        const newItem: CartItem = {
+        const newItem: Book = {
             bookID: book?.bookID ?? 0,
             title: book?.title ?? '',
+            author: book?.author ?? '',
+            publisher: book?.publisher ?? '',
+            isbn: book?.isbn ?? '',
+            classification: book?.classification ?? '',
+            category: book?.category ?? '',
+            pageCount: book?.pageCount ?? 0,
             price: book?.price ?? 0,
             quantity: 1
         }
